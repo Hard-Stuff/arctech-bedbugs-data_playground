@@ -23,10 +23,12 @@ def all_filenames_belonging_to_device(
     folder: str,
     first_N: Optional[int] = None,
     skip_list: Optional[List[str]] = None,
+    include_list: Optional[List[str]] = None,
 ) -> List[str]:
     """
     Return all filenames in `folder` that contain `device_id` in their name,
-    sorted naturally, optionally skipping files containing any substring in skip_list.
+    sorted naturally, optionally skipping files containing any substring in skip_list,
+    and optionally requiring at least one substring in include_list to be present.
 
     Parameters
     ----------
@@ -38,6 +40,8 @@ def all_filenames_belonging_to_device(
         If specified, only return the first N matching files.
     skip_list : Optional[List[str]]
         List of substrings; any filename containing one of these will be ignored.
+    include_list : Optional[List[str]]
+        List of substrings; at least one must appear in the filename to include it.
 
     Returns
     -------
@@ -46,6 +50,7 @@ def all_filenames_belonging_to_device(
     """
 
     skip_list = skip_list or []
+    include_list = include_list or []
 
     def natural_sort_key(s: str):
         return [
@@ -58,6 +63,8 @@ def all_filenames_belonging_to_device(
         if device_id not in filename:
             continue
         if any(skip_str in filename for skip_str in skip_list):
+            continue
+        if include_list and not any(inc_str in filename for inc_str in include_list):
             continue
 
         full_path = os.path.join(folder, filename)
