@@ -1,24 +1,25 @@
 import json
 from utils.n_plot import create_dash_app
+from utils.file_openner import load_and_prepare_data, all_filenames_belonging_to_device
 
-# Load tests.json
-with open("tests.json", "r") as f:
-    tests = json.load(f)
+# Step 1 - load in all relevant data for a single device
+DEVICE_ID = "94A99037CBDC"
+CONTROL_PREFIX = "EMPTY PETRI DISH"
 
-# Choose the test you want to run
-test_key = "Bedbugs, background, Lure (2)"
+# Step 2 - figure out the avg. values to use as our reference point
+# (TODO - hook in load_and_prepare_data_with_reference if needed)
 
-test_data = tests[test_key]
-folder = "20250625 - lab testing data"
-filenames = [f for f in test_data["filenames"]]  # add .csv as you mentioned
-titles = test_data["conditions"]
-chambers = test_data["chambers"]
+# Get files for a specific device
+filenames = all_filenames_belonging_to_device(
+    "94A99037D910", "./scratch_data/20250813 - DEAD BEDBUG", 10, ["EMPTY PETRI DISH"]
+)
+
+df = load_and_prepare_data(filenames)
 
 app = create_dash_app(
-    folder=folder,
-    filenames=filenames,
-    titles=list(f"{titles[i]}:{chambers[i]}" for i in range(0, len(titles))),
-    master_title=test_key,
+    {df["device_id"].iloc[0]: df},  # wrap single DataFrame in dict for plotting
+    titles={df["device_id"].iloc[0]: "Settling Period 1 (5 minutes)"},
+    master_title="Sensor Comparison Dashboard",
 )
 
 if __name__ == "__main__":
