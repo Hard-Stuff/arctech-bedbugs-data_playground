@@ -18,13 +18,13 @@ CONTROL_PREFIX = "EMPTY PETRI DISH"
 
 # Get files for a specific device
 filenames = all_filenames_belonging_to_device(
-    "94A99037D910", "./scratch_data/20250813 - DEAD BEDBUG", 10, ["EMPTY PETRI DISH"]
+    "94A99037D910", "./data/20250813 - DEAD BEDBUG", 10, ["EMPTY PETRI DISH"]
 )
 
 # Step 2 - figure out the avg. values to use as our reference point
 df = load_and_prepare_data_with_reference(
     filenames,
-    "./scratch_data/20250813 - DEAD BEDBUG/Exposure 5 -EMPTY PETRI DISH  (94A99037D910)-20250813_104225.csv",
+    "./data/20250813 - DEAD BEDBUG/Exposure 5 -EMPTY PETRI DISH  (94A99037D910)-20250813_104225.csv",
     10,
     normalize_fn=NORMALIZATION_FUNCTION
 )

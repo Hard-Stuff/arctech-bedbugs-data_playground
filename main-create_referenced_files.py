@@ -11,7 +11,7 @@ import os
 
 # DEFINITIONS
 DEVICE_IDS = ["94A99037CBDC", "94A99037D910"]  # example devices
-MASTER_FOLDER = "./scratch_data/20250813 - DEAD BEDBUG"
+MASTER_FOLDER = "./data/20250813 - DEAD BEDBUG"
 
 # OPERATION AND CONTROL
 SHOW_ONLY_LAST_N_SAMPLES = 25  # Show only the last N samples on the graph

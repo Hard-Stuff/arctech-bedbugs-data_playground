@@ -15,7 +15,7 @@
   - (optional) Take only the last N samples (`SHOW_ONLY_LAST_N_SAMPLES`).  
   - (optional) Drop unnecessary columns (`scenario`, `device_id`, `_R1`).
 - **Output:**  
-  - Creates one CSV per device per scenario in `./scratch_data/20250813 - DEAD BEDBUG/referenced/`.  
+  - Creates one CSV per device per scenario in `./data/20250813 - DEAD BEDBUG/referenced/`.  
   - Scenario names are sanitized for file naming.  
 - **Run:**  
   - Execute the script via `python main-create_referenced_files.py` to automatically generate all referenced CSV files
@@ -35,6 +35,23 @@
 - **Run:**  
   - Execute the script via `python main-plot_multiple_devices.py` to launch the web dashboard  
 
+  <img src="./readme_assets/plot_multiple_devices_ens160r0.png" width="100%" />
+
+  What this graph shows us, is (in order of vertical apperance, start from the top):
+  - <span style="font-weight: bold; color: purple;">———</span> Exposure (31-40) Bedbugs Alive (4)
+  - <span style="font-weight: bold; color: green;">———</span> Exposure (21-30) Bedbugs Alive (2)
+  - <span style="font-weight: bold; color: yellow;">———</span> Exposure (31-40) Bedbugs Dead (4)
+  - <span style="font-weight: bold; color: orange;">———</span> Exposure (11-20) Bedbugs Alive (0)
+  - <span style="font-weight: bold; color: pink;">———</span> Exposure (21-30) Bedbugs Dead (2)
+  - <span style="font-weight: bold; color: cyan;">———</span> Exposure (11-20) Bedbugs Dead (0)
+  - <span style="font-weight: bold; color: peach;">———</span> Exposure (51-60) Bedbugs Dead @ 24h
+  - <span style="font-weight: bold; color: blue;">———</span> Exposure (6-10) No bedbugs
+  
+  However it also shows a lot of spread, which means we either:
+  - Need to tailor the sensor's temperatures to more specifically pick up bedbug VOCs
+  - Need to improve our referencing algorithm (i.e. not just a simple division only)
+  - Need to potentially burn in our sensors more
+  - ..others ideas?
 
 ### Plot Single Device
 

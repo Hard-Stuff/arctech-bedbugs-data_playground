@@ -15,12 +15,19 @@ from typing import Dict
 from pandas import DataFrame
 
 # DEFINITIONS
-DEVICE_IDS = ["94A99037CBDC", "94A99037D910"]  # example devices
-MASTER_FOLDER = "./scratch_data/20250813 - DEAD BEDBUG"
+DEVICE_IDS = [
+    "94A99037CBDC",
+    "94A99037D910",
+    "B43A45B076C0",
+    "B43A45B07714",
+    "E4B323F833EC",
+    "E4B323F83080",
+]  # example devices
+MASTER_FOLDER = "./data/20250813 - DEAD BEDBUG"
 
 # OPERATION AND CONTROL
 
-USE_REFERENCING_TO_NORMALISE = False  # We use the last "EMPTY PETRI DISH" files to normalise the data
+USE_REFERENCING_TO_NORMALISE = True  # We use the last "EMPTY PETRI DISH" files to normalise the data
 SHOW_RAW_LINES_NOT_BANDS = False  # Takes the average of a scenario (a given set of exposures by name) and plots that over the ghost of all instead.
 SHOW_ONLY_LAST_N_SAMPLES = 25  # Show only the last N samples on the graph
 
