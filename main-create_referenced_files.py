@@ -1,4 +1,4 @@
-from utils.file_openner import (
+from utils.file_opener import (
     load_and_prepare_data_with_reference,
     all_filenames_belonging_to_device,
 )

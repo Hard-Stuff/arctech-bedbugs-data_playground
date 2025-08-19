@@ -1,6 +1,6 @@
 # IMPORTS
 from utils.n_plot import create_per_device_app, create_grouped_app
-from utils.file_openner import (
+from utils.file_opener import (
     load_and_prepare_data_with_reference,
     load_and_prepare_data,
     all_filenames_belonging_to_device,
