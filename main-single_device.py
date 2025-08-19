@@ -1,4 +1,4 @@
-from utils.n_plot import create_dash_app
+from utils.n_plot import create_per_device_app
 from utils.file_openner import (
     load_and_prepare_data,
     load_and_prepare_data_with_reference,
@@ -32,7 +32,7 @@ df = take_last_n_samples(df, 25)
 
 df = apply_moving_average(df, 5)
 
-app = create_dash_app(
+app = create_per_device_app(
     {df["device_id"].iloc[0]: df},  # wrap single DataFrame in dict for plotting
     titles={df["device_id"].iloc[0]: "Settling Period 1 (5 minutes)"},
     master_title="Sensor Comparison Dashboard",

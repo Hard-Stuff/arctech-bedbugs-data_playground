@@ -53,10 +53,7 @@ def all_filenames_belonging_to_device(
     include_list = include_list or []
 
     def natural_sort_key(s: str):
-        return [
-            int(text) if text.isdigit() else text.lower()
-            for text in re.split(r"(\d+)", s)
-        ]
+        return [int(text) if text.isdigit() else text.lower() for text in re.split(r"(\d+)", s)]
 
     matching_files = []
     for filename in sorted(os.listdir(folder), key=natural_sort_key):
@@ -92,7 +89,7 @@ def load_and_prepare_data(filenames: List[str]) -> pd.DataFrame:
         df = df.iloc[:, :-1].reset_index(drop=True)
 
         # Add relative_time (s)
-        df["relative_time"] = (df["timestamp"] - df["timestamp"].iloc[0]) / 1000.0
+        df["relative_time"] = df.index.to_numpy()
 
         # Extract once
         if device_id is None:
@@ -110,9 +107,7 @@ def load_and_prepare_data(filenames: List[str]) -> pd.DataFrame:
 
 
 # Default: simple division
-DEFAULT_NORMALIZE_FN = lambda col_values, ref_value: (
-    col_values / ref_value if ref_value != 0 else col_values
-)
+DEFAULT_NORMALIZE_FN = lambda col_values, ref_value: (col_values / ref_value if ref_value != 0 else col_values)
 
 
 def load_and_prepare_data_with_reference(
@@ -148,7 +143,7 @@ def load_and_prepare_data_with_reference(
         df = pd.read_csv(file).iloc[:, :-1].reset_index(drop=True)
 
         # relative_time
-        df["relative_time"] = (df["timestamp"] - df["timestamp"].iloc[0]) / 1000.0
+        df["relative_time"] = df.index.to_numpy()
 
         # Apply normalization function
         for col in normalize_cols:
