@@ -1,3 +1,4 @@
+# IMPORTS
 from utils.n_plot import create_per_device_app, create_grouped_app
 from utils.file_openner import (
     load_and_prepare_data_with_reference,
@@ -23,6 +24,11 @@ USE_REFERENCING_TO_NORMALISE = False  # We use the last "EMPTY PETRI DISH" files
 SHOW_RAW_LINES_NOT_BANDS = False  # Takes the average of a scenario (a given set of exposures by name) and plots that over the ghost of all instead.
 SHOW_ONLY_LAST_N_SAMPLES = 25  # Show only the last N samples on the graph
 
+# Simple division
+NORMALIZATION_FUNCTION = lambda col_values, ref_value: (col_values / ref_value if ref_value != 0 else col_values)
+# Simple subtraction
+# NORMALIZATION_FUNCTION = lambda col_values, ref_value: (col_values - ref_value if ref_value != 0 else col_values)
+
 # WORKING VARIABLES
 
 data_dict: Dict[str, DataFrame] = {}
@@ -39,7 +45,7 @@ for device_id in DEVICE_IDS:
     if not control_files:
         raise ValueError(f"No control files found for device {device_id}")
 
-    # Use the last control file as the reference
+    # Use the last control file as the reference (e.g. if there's 5, use the last)
     control_file = control_files[-1]
 
     # --- Get all test files (exclude empty petri dish files) ---
@@ -56,6 +62,7 @@ for device_id in DEVICE_IDS:
             test_files,
             control_file,  # device-specific reference
             take_last_n=10,
+            normalize_fn=NORMALIZATION_FUNCTION,
         )
     else:
         df = load_and_prepare_data(test_files)

@@ -114,21 +114,19 @@ def load_and_prepare_data_with_reference(
     filenames: List[str],
     reference: str,
     take_last_n: int = -1,
-    normalize_cols: Optional[List[str]] = None,
+    normalize_cols: List[str] = [
+        "BME688_R",
+        "ENS160_R0",
+        "ENS160_R1",
+        "ENS160_R2",
+        "ENS160_R3",
+    ],
     normalize_fn=DEFAULT_NORMALIZE_FN,
 ) -> pd.DataFrame:
     """
     Load CSVs for a single device, normalize against reference,
     and return combined DataFrame with device_id and scenario labels.
     """
-    if normalize_cols is None:
-        normalize_cols = [
-            "BME688_R",
-            "ENS160_R0",
-            "ENS160_R1",
-            "ENS160_R2",
-            "ENS160_R3",
-        ]
 
     # --- Reference averages ---
     ref_df = pd.read_csv(reference).iloc[:, :-1]

@@ -18,6 +18,12 @@ SHOW_ONLY_LAST_N_SAMPLES = 25  # Show only the last N samples on the graph
 OUTPUT_FOLDER = f"{MASTER_FOLDER}/referenced"
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
+# Simple division
+NORMALIZATION_FUNCTION = lambda col_values, ref_value: (col_values / ref_value if ref_value != 0 else col_values)
+# Simple subtraction
+# NORMALIZATION_FUNCTION = lambda col_values, ref_value: (col_values - ref_value if ref_value != 0 else col_values)
+
+
 # WORKING VARIABLES
 data_dict: Dict[str, DataFrame] = {}
 
@@ -48,6 +54,7 @@ for device_id in DEVICE_IDS:
         test_files,
         control_file,
         take_last_n=10,
+        normalize_fn=NORMALIZATION_FUNCTION,
     )
 
     if SHOW_ONLY_LAST_N_SAMPLES:
